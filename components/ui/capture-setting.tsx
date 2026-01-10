@@ -1,13 +1,14 @@
-import { PropsWithChildren, useState} from 'react';
-import {StyleSheet, TouchableOpacity, Switch} from 'react-native';
+import { StyleSheet, Switch } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 
-export function CaptureSetting({children, title, trueText, falseText}: PropsWithChildren & { title: string, trueText: string, falseText: string }) {
-
-    const [toggle, setToggle] = useState(false);
-
+export function CaptureSetting(props: { title: string; toggle: boolean; setToggle: any; trueText: string; falseText: string; }) {
+  const title = props.title;
+  const toggle = props.toggle;
+  const setToggle = props.setToggle;
+  const trueText = props.trueText;
+  const falseText = props.falseText;
 
     return(
             <ThemedView>
@@ -32,7 +33,7 @@ export function CaptureSetting({children, title, trueText, falseText}: PropsWith
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderWidth:3,
+    borderWidth:0,
     borderRadius:10,
     borderColor: 'black',
     padding:4,

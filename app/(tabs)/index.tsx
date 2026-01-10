@@ -1,19 +1,41 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, Switch } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+
+import { Image } from 'expo-image';
+
+import GetLocation from '@/components/location';
+import GetMap from '@/components/map';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { CaptureSetting } from '@/components/ui/capture-setting';
-import { Link } from 'expo-router';
-import { useState } from 'react';
+
+
+
 
 export default function HomeScreen() {
 
-  const [allowCaptures, setAllowCaptures] = useState(false);
-  const [captureOthers, setCaptureOthers] = useState(false);
-  const [someoneFound, setSomeoneFound] = useState(false);
+  const [visibility, setVisibility] = useState(false);
+  const [enableMap, setEnableMap] = useState(false);
+  const [locationData, setLocationData] = useState<string>("");
+
+  const parseForLat = () =>
+  {
+    let locObj = JSON.parse(locationData);
+    return locObj.coords.latitude;
+  }
+
+  const parseForLong = () =>
+  {
+    let locObj = JSON.parse(locationData);
+    return locObj.coords.longitude;
+  }
+
+  const handleSetLocData = (data: string) =>
+  {
+    setLocationData(data);
+  }
 
   return (
 
@@ -38,16 +60,46 @@ export default function HomeScreen() {
           title= "Visibility"
           trueText='Visible'
           falseText='Invisible'
-        />
-
-        <CaptureSetting
-          title= "Listen for Others"
-          trueText='Listening'
-          falseText='Not Listening'
+          setToggle={setVisibility}
+          toggle={visibility}
+        
         />
 
         
+        <ThemedView>
+          {visibility ? 
+            <View>
+              
+              <ThemedText>
+                <GetLocation
+                getData={handleSetLocData}
+                />
+              </ThemedText>
 
+            
+              {enableMap ? 
+              <ThemedView style={styles.mapContainer}>
+                <GetMap
+                  latitude = {parseForLat()}
+                  longitude = {parseForLong()} 
+                /> 
+
+              </ThemedView>
+              :
+
+              <CaptureSetting
+                title= "Map"
+                toggle= {enableMap}
+                setToggle = {setEnableMap}
+                trueText = ""
+                falseText = 'Map Off'
+              />}
+            </View>
+          : 
+            <ThemedText>
+              Enable Visibility
+            </ThemedText>}
+        </ThemedView>
       </ThemedView>
       
     </ParallaxScrollView>
@@ -72,5 +124,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
+  },
+
+  mapContainer: {
+    width: "100%",
+    height: 300,
+    borderRadius: 20,
+    borderWidth: 0,
+    borderColor: "red",
+    padding: 10,
+
   },
 });
