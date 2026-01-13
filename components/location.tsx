@@ -1,7 +1,6 @@
+import * as api from '@/database_api/api-calls.js';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-
-
 
 import * as Location from 'expo-location';
 import { ThemedText } from './themed-text';
@@ -36,15 +35,15 @@ export default function GetLocation({getData}: {getData: any}) {
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
-    let jsontext = JSON.stringify(location);
-    let loc_obj = JSON.parse(jsontext);
-    let date = new Date(loc_obj.timestamp);
+    var jsontext = JSON.stringify(location);
+    var loc_obj = JSON.parse(jsontext);
+    var date = new Date(loc_obj.timestamp);
     /*text = "LAT: " + loc_obj.coords.latitude + 
     "\n LONG: " + loc_obj.coords.longitude + 
     "\nTIME: " + date.toDateString() + " " + date.toLocaleTimeString();*/
     text = ""
-  
-    handleLocationData(jsontext);
+    api.sendLocationToDatabase(loc_obj.coords.latitude, loc_obj.coords.longitude);
+    handleLocationData(jsontext); 
   }
 
   return (

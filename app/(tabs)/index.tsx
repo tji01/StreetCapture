@@ -12,8 +12,6 @@ import { ThemedView } from '@/components/themed-view';
 import { CaptureSetting } from '@/components/ui/capture-setting';
 
 
-
-
 export default function HomeScreen() {
 
   const [visibility, setVisibility] = useState(false);
@@ -76,6 +74,7 @@ export default function HomeScreen() {
                 />
               </ThemedText>
 
+              
             
               {enableMap ? 
               <ThemedView style={styles.mapContainer}>
