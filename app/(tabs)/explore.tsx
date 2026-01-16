@@ -1,16 +1,9 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { HeaderTitle } from '@react-navigation/elements';
 import { Capture } from '@/components/ui/capture';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function TabTwoScreen() {
   return (
@@ -26,6 +19,9 @@ export default function TabTwoScreen() {
 
 
         <ScrollView style = {styles.scrollContainer}>
+          {/* The components and information for each will be generated in a loop on recieving data
+          from the getCaptures API call (which returns a list of uid's). For each, the getUserInfo API 
+          call will be made to fetch the information */}
           <Capture
             username='tyler'
             time='now'

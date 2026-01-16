@@ -1,18 +1,26 @@
-import { PropsWithChildren, useState} from 'react';
-import {StyleSheet, TouchableOpacity, Switch, View, Alert} from 'react-native';
+import { PropsWithChildren, useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useRouter } from 'expo-router';
 
 export function Capture({children, username, time, message}: PropsWithChildren & { username: string, time: string, message: string }) {
 
     const [toggle, setToggle] = useState(false);
 
+     const router = useRouter();
 
     return(
         <View>
             <TouchableOpacity
-                onPress={() => (Alert.alert("you pressed a button"))}
+                onPress={() => (router.push({
+                    pathname: "/profile",
+                    params: {
+                        user: username,
+                        message: message 
+                    }
+                }))}
             >
                 <ThemedView style = {styles.container}>
                     <ThemedText style = {styles.containerText}>
